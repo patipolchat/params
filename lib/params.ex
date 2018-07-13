@@ -91,6 +91,15 @@ defmodule Params do
     end)
   end
 
+  @spec validate(Changeset.t) :: {:ok, struct} | {:error, Ecto.Changeset.t}
+  def validate(%Changeset{data: _data} = ch) do
+    if ch.valid? do
+      {:ok, data(ch)}
+    else
+      {:error, ch}
+    end
+  end
+
   @doc false
   def default_embeds_from_schema(module) when is_atom(module) do
     is_embed_default = fn kw ->
